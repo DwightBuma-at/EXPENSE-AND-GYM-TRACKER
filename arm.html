@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arm Day - Gym Tracker</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+
+  <!-- Local Offline Scripts with CDN Fallbacks -->
+  <script src="assets/js/tailwind.min.js"></script>
+  <script>
+    if (typeof tailwind === 'undefined') {
+      document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="assets/js/lucide.min.js"></script>
+  <script>
+    if (typeof lucide === 'undefined') {
+      document.write('<script src="https://unpkg.com/lucide@latest"><\/script>');
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #F2F2F7;
+      color: #000000;
+    }
+
+    /* Outlined Inset Card */
+    .ios-outlined-card {
+      background-color: #FFFFFF;
+      border-radius: 22px;
+      border: 1.5px solid #D1D1D6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    /* Primary iOS Button */
+    .ios-btn-primary {
+      background-color: #5856D6;
+      color: #FFFFFF;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 8px rgba(88, 86, 214, 0.25);
+    }
+    .ios-btn-primary:hover {
+      background-color: #4B48C6;
+      box-shadow: 0 6px 18px rgba(88, 86, 214, 0.35);
+      transform: translateY(-1px);
+    }
+    .ios-btn-primary:active {
+      background-color: #3F3CAE;
+      transform: scale(0.98);
+    }
+
+    /* iOS Modal Transition */
+    .ios-modal-anim {
+      animation: iosSpring 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes iosSpring {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-8 antialiased">
+
+  <div class="w-full max-w-xl space-y-5">
+
+    <!-- Top Bar (Apple iOS Style) -->
+    <div class="flex items-center justify-between pt-2 min-h-[42px]">
+      <a href="gym.html" class="inline-flex items-center gap-0.5 text-[#007AFF] text-[17px] font-medium hover:opacity-80 active:opacity-40 transition-opacity cursor-pointer no-underline">
+        <i data-lucide="chevron-left" class="w-5 h-5 -ml-1"></i>
+        <span>Back</span>
+      </a>
+
+      <span class="text-gray-900 text-[17px] font-bold tracking-tight select-none">
+        Arm Day
+      </span>
+
+      <!-- Placeholder to balance center title -->
+      <div class="w-[50px]"></div>
+    </div>
+
+    <!-- Workout List Card with Crisp Outline & Cool Neat Design -->
+    <div class="ios-outlined-card divide-y divide-[#E5E5EA] overflow-hidden mt-2">
+
+      <!-- Exercise 1 -->
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Dumbbell Lateral Raises')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
+            1
+          </div>
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+            Dumbbell Lateral Raises
+          </span>
+        </div>
+        <button onclick="openHistoryModal('Dumbbell Lateral Raises', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>View Logs</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Exercise 2 -->
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Seated Cable Face Pull')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
+            2
+          </div>
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+            Seated Cable Face Pull
+          </span>
+        </div>
+        <button onclick="openHistoryModal('Seated Cable Face Pull', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>View Logs</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Exercise 3 -->
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Tricep Pushdown (Vbar)')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
+            3
+          </div>
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+            Tricep Pushdown (Vbar)
+          </span>
+        </div>
+        <button onclick="openHistoryModal('Tricep Pushdown (Vbar)', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>View Logs</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Exercise 4 -->
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Tricep Pullover (Vbar)')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
+            4
+          </div>
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+            Tricep Pullover (Vbar)
+          </span>
+        </div>
+        <button onclick="openHistoryModal('Tricep Pullover (Vbar)', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>View Logs</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Exercise 5 -->
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Incline Seated Bicep Curl')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
+            5
+          </div>
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+            Incline Seated Bicep Curl
+          </span>
+        </div>
+        <button onclick="openHistoryModal('Incline Seated Bicep Curl', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>View Logs</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+      <!-- Exercise 6 -->
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Hammer Curls')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+          <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
+            6
+          </div>
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+            Hammer Curls
+          </span>
+        </div>
+        <button onclick="openHistoryModal('Hammer Curls', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>View Logs</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Modal 1: Log Exercise Session (Reps, Weight & KG/LBS Toggle) -->
+  <div id="logModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex items-start pt-16 sm:pt-20 justify-center p-4">
+    <div class="ios-modal-anim w-full max-w-sm ios-outlined-card p-6 space-y-4 shadow-xl">
+      <div class="flex items-start justify-between border-b border-[#E5E5EA] pb-3">
+        <div>
+          <h3 class="font-bold text-lg text-gray-900 leading-tight" id="modal-exercise-title">
+            Log Workout
+          </h3>
+          <p class="text-xs text-gray-500 pt-0.5">2 Sets Routine • Enter details</p>
+        </div>
+        <button onclick="closeLogModal()" class="text-gray-400 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="logForm" onsubmit="handleSaveLog(event)" class="space-y-4">
+        <!-- Reps Input -->
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Reps per set</label>
+          <input 
+            type="number" 
+            id="log-reps" 
+            required 
+            min="1" 
+            value="12" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-[#C6C6C8] bg-white text-gray-900 font-semibold text-base focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
+          />
+        </div>
+
+        <!-- Weight with KG / LBS Toggle -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500">Weight</label>
+            <!-- iOS Segmented Toggle -->
+            <div class="flex p-0.5 rounded-lg bg-gray-200 text-xs font-semibold select-none">
+              <button 
+                type="button" 
+                id="unit-kg-btn" 
+                onclick="setUnit('kg')" 
+                class="px-2.5 py-0.5 rounded-md bg-white text-gray-900 shadow-xs transition-all cursor-pointer font-bold"
+              >
+                KG
+              </button>
+              <button 
+                type="button" 
+                id="unit-lbs-btn" 
+                onclick="setUnit('lbs')" 
+                class="px-2.5 py-0.5 rounded-md text-gray-500 hover:text-gray-900 transition-all cursor-pointer font-semibold"
+              >
+                LBS
+              </button>
+            </div>
+          </div>
+
+          <div class="relative">
+            <input 
+              type="number" 
+              step="any"
+              id="log-weight" 
+              required 
+              placeholder="e.g. 18" 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-[#C6C6C8] bg-white text-gray-900 font-semibold text-base focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all pr-12"
+            />
+            <span id="weight-unit-label" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 pointer-events-none uppercase">
+              KG
+            </span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="pt-2 flex gap-2.5">
+          <button 
+            type="button" 
+            onclick="closeLogModal()" 
+            class="flex-1 py-2.5 rounded-xl bg-gray-100 text-gray-700 font-semibold text-sm hover:bg-gray-200 active:bg-gray-300 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+          <button 
+            type="submit" 
+            id="save-log-btn"
+            class="flex-1 py-2.5 rounded-xl ios-btn-primary font-bold text-sm cursor-pointer flex items-center justify-center gap-2"
+          >
+            Save Log
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Floating Workout History Modal -->
+  <div id="historyModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex items-start pt-16 sm:pt-20 justify-center p-4">
+    <div class="ios-modal-anim w-full max-w-sm ios-outlined-card p-5 space-y-3.5 shadow-xl">
+      
+      <!-- View 1: Dates List -->
+      <div id="history-dates-view">
+        <div class="flex items-start justify-between border-b border-[#E5E5EA] pb-2.5 mb-3">
+          <div>
+            <h3 class="font-bold text-lg text-gray-900 leading-tight">
+              Workout Logs
+            </h3>
+            <p class="text-xs text-gray-500 pt-0.5">Select a date to view workouts</p>
+          </div>
+          <button onclick="closeHistoryModal()" class="text-gray-400 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="historyDatesList" class="space-y-2 max-h-80 overflow-y-auto pr-0.5">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- View 2: All Workouts on Selected Date -->
+      <div id="history-detail-view" class="hidden">
+        <div class="flex items-center justify-between border-b border-[#E5E5EA] pb-2.5 mb-3">
+          <button onclick="backToDatesView()" class="inline-flex items-center gap-1 text-[#5856D6] text-sm font-semibold hover:opacity-80 active:opacity-40 transition-opacity cursor-pointer">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>Dates</span>
+          </button>
+          <span class="font-bold text-base text-gray-900" id="detail-date-title">
+            Date
+          </span>
+          <button onclick="closeHistoryModal()" class="text-gray-400 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="historyDetailList" class="space-y-2.5 max-h-80 overflow-y-auto pr-0.5">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'gym_daily_logs_arm';
+    let currentExercise = '';
+    let currentUnit = 'kg';
+    let selectedDate = '';
+
+    function getLogs() {
+      let logs = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!logs) {
+        logs = {};
+        // Migrate old logs if any exist
+        const old = JSON.parse(localStorage.getItem('gym_workout_logs_arm'));
+        if (old) {
+          for (const exName in old) {
+            old[exName].forEach(item => {
+              const parts = (item.text || '').split('|').map(s => s.trim());
+              const d = parts[0] || '9/10/26';
+              const r = (parts[1] || '12 reps').replace(/reps?/i, '').trim() || '12';
+              const wRaw = parts[2] || '50 kg';
+              const wVal = wRaw.split(' ')[0] || '50';
+              const uVal = (wRaw.split(' ')[1] || 'kg').toLowerCase();
+              if (!logs[d]) logs[d] = [];
+              logs[d].push({
+                id: item.id || Date.now().toString(),
+                exercise: exName,
+                reps: r,
+                weight: wVal,
+                unit: uVal,
+                timestamp: item.timestamp || Date.now()
+              });
+            });
+          }
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+        }
+      }
+      return logs;
+    }
+
+    function saveLogs(logs) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+    }
+
+    function setUnit(unit) {
+      currentUnit = unit;
+      const kgBtn = document.getElementById('unit-kg-btn');
+      const lbsBtn = document.getElementById('unit-lbs-btn');
+      const unitLabel = document.getElementById('weight-unit-label');
+
+      if (unit === 'kg') {
+        kgBtn.className = 'px-2.5 py-0.5 rounded-md bg-white text-gray-900 shadow-xs transition-all cursor-pointer font-bold';
+        lbsBtn.className = 'px-2.5 py-0.5 rounded-md text-gray-500 hover:text-gray-900 transition-all cursor-pointer font-semibold';
+        unitLabel.textContent = 'KG';
+      } else {
+        lbsBtn.className = 'px-2.5 py-0.5 rounded-md bg-white text-gray-900 shadow-xs transition-all cursor-pointer font-bold';
+        kgBtn.className = 'px-2.5 py-0.5 rounded-md text-gray-500 hover:text-gray-900 transition-all cursor-pointer font-semibold';
+        unitLabel.textContent = 'LBS';
+      }
+    }
+
+    function openLogModal(exerciseName) {
+      currentExercise = exerciseName;
+      document.getElementById('modal-exercise-title').textContent = exerciseName;
+      document.getElementById('log-reps').value = '12';
+      document.getElementById('log-weight').value = '';
+      const saveBtn = document.getElementById('save-log-btn');
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = 'Save Log';
+      }
+      setUnit('kg');
+      document.getElementById('logModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('log-weight').focus(), 50);
+    }
+
+    function closeLogModal() {
+      document.getElementById('logModal').classList.add('hidden');
+      document.getElementById('logForm').reset();
+      const saveBtn = document.getElementById('save-log-btn');
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = 'Save Log';
+      }
+    }
+
+    function handleSaveLog(e) {
+      e.preventDefault();
+      const reps = document.getElementById('log-reps').value.trim() || '12';
+      const weight = document.getElementById('log-weight').value.trim();
+      if (!weight) return;
+
+      const saveBtn = document.getElementById('save-log-btn');
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = `
+          <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span>Saving...</span>
+        `;
+      }
+
+      setTimeout(() => {
+        const now = new Date();
+        const year = now.getFullYear().toString().slice(-2);
+        const dateFormatted = `${now.getMonth() + 1}/${now.getDate()}/${year}`;
+
+        const logs = getLogs();
+        if (!logs[dateFormatted]) {
+          logs[dateFormatted] = [];
+        }
+
+        logs[dateFormatted].push({
+          id: Date.now().toString(),
+          exercise: currentExercise,
+          reps: reps,
+          weight: weight,
+          unit: currentUnit,
+          timestamp: Date.now()
+        });
+
+        saveLogs(logs);
+
+        if (saveBtn) {
+          saveBtn.innerHTML = `
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Saved!</span>
+          `;
+        }
+
+        setTimeout(() => {
+          closeLogModal();
+          if (!document.getElementById('historyModal').classList.contains('hidden')) {
+            renderDatesList();
+            if (selectedDate === dateFormatted) {
+              showDateDetails(dateFormatted);
+            }
+          }
+        }, 350);
+      }, 550);
+    }
+
+    function openHistoryModal(exerciseName, event) {
+      if (event) event.stopPropagation();
+      backToDatesView();
+      renderDatesList();
+      document.getElementById('historyModal').classList.remove('hidden');
+    }
+
+    function closeHistoryModal() {
+      document.getElementById('historyModal').classList.add('hidden');
+    }
+
+    function backToDatesView() {
+      document.getElementById('history-dates-view').classList.remove('hidden');
+      document.getElementById('history-detail-view').classList.add('hidden');
+      renderDatesList();
+    }
+
+    function showDateDetails(dateKey) {
+      selectedDate = dateKey;
+      document.getElementById('detail-date-title').textContent = dateKey;
+      document.getElementById('history-dates-view').classList.add('hidden');
+      document.getElementById('history-detail-view').classList.remove('hidden');
+      renderDateDetails(dateKey);
+    }
+
+    function deleteWorkoutEntry(dateKey, id) {
+      const logs = getLogs();
+      if (logs[dateKey]) {
+        logs[dateKey] = logs[dateKey].filter(item => item.id !== id);
+        if (logs[dateKey].length === 0) {
+          delete logs[dateKey];
+          saveLogs(logs);
+          backToDatesView();
+          return;
+        }
+        saveLogs(logs);
+        renderDateDetails(dateKey);
+      }
+    }
+
+    function renderDatesList() {
+      const container = document.getElementById('historyDatesList');
+      const logs = getLogs();
+      const dates = Object.keys(logs);
+
+      if (dates.length === 0) {
+        container.innerHTML = `
+          <div class="py-6 px-4 text-center text-gray-400 text-xs font-medium border border-dashed border-gray-200 rounded-xl">
+            No workout logs recorded yet.<br>Tap an exercise to record your workout.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = dates.map(dateKey => {
+        const uniqueExercises = new Set(logs[dateKey].map(item => item.exercise)).size;
+        return `
+          <div onclick="showDateDetails('${dateKey}')" class="py-3 px-4 rounded-xl bg-gray-50 border border-gray-200/80 flex items-center justify-between group cursor-pointer hover:bg-gray-100/90 active:bg-gray-200/70 transition-all select-none">
+            <span class="font-bold text-sm text-gray-900 group-hover:text-[#5856D6] transition-colors">
+              ${dateKey}
+            </span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-medium text-gray-400">${uniqueExercises} ${uniqueExercises === 1 ? 'exercise' : 'exercises'}</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 group-hover:text-[#5856D6] group-hover:translate-x-0.5 transition-all"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function renderDateDetails(dateKey) {
+      const container = document.getElementById('historyDetailList');
+      const logs = getLogs();
+      const list = (logs[dateKey] || []).slice().sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="py-6 px-4 text-center text-gray-400 text-xs font-medium border border-dashed border-gray-200 rounded-xl">
+            No workouts for this date.
+          </div>
+        `;
+        return;
+      }
+
+      // Group sets under their respective exercise
+      const groups = [];
+      const groupMap = new Map();
+
+      list.forEach(item => {
+        if (!groupMap.has(item.exercise)) {
+          const group = {
+            exercise: item.exercise,
+            sets: []
+          };
+          groupMap.set(item.exercise, group);
+          groups.push(group);
+        }
+        groupMap.get(item.exercise).sets.push(item);
+      });
+
+      container.innerHTML = groups.map(group => `
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200/80">
+          <h4 class="font-bold text-[15px] text-gray-900 leading-snug mb-1">
+            ${group.exercise}
+          </h4>
+          <div class="space-y-1">
+            ${group.sets.map(item => `
+              <div class="flex items-center justify-between text-xs sm:text-sm font-semibold text-gray-600">
+                <span>- ${item.reps} reps | ${item.weight}${item.unit}</span>
+                <button onclick="deleteWorkoutEntry('${dateKey}', '${item.id}')" class="text-gray-300 hover:text-red-500 p-0.5 rounded transition-colors cursor-pointer" title="Delete set">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    window.addEventListener('click', (e) => {
+      const logModal = document.getElementById('logModal');
+      const historyModal = document.getElementById('historyModal');
+      if (e.target === logModal) closeLogModal();
+      if (e.target === historyModal) closeHistoryModal();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

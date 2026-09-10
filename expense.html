@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+
+  <!-- Local Offline Scripts with CDN Fallbacks -->
+  <script src="assets/js/tailwind.min.js"></script>
+  <script>
+    if (typeof tailwind === 'undefined') {
+      document.write('<script src="https://cdn.tailwindcss.com"><\/script>');
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="assets/js/lucide.min.js"></script>
+  <script>
+    if (typeof lucide === 'undefined') {
+      document.write('<script src="https://unpkg.com/lucide@latest"><\/script>');
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+      background-color: #F2F2F7;
+      color: #000000;
+    }
+    .font-display {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* iOS Card Style with Smooth Hover */
+    .ios-card {
+      background-color: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ios-card-hoverable:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    /* History Card with Enhanced Interactive Hover & Proportional Responsive Size */
+    .history-card-item {
+      background-color: #FFFFFF;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.08);
+      min-height: 60px;
+      padding: 14px 16px;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (min-width: 640px) {
+      .history-card-item {
+        min-height: 68px;
+        padding: 16px 22px;
+      }
+    }
+    .history-card-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 122, 255, 0.38);
+      box-shadow: 0 10px 25px rgba(0, 122, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+      background-color: #FAFAFD;
+    }
+    .history-card-item:active {
+      transform: scale(0.99) translateY(0);
+      background-color: #F2F2F7;
+    }
+
+    /* Sleek Custom iOS Scrollbar */
+    .ios-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .ios-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 9999px;
+    }
+    .ios-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.18);
+      border-radius: 9999px;
+    }
+    .ios-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.32);
+    }
+
+    /* iOS Button with Premium Hover */
+    .ios-btn-primary {
+      background-color: #007AFF;
+      color: #FFFFFF;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+    }
+    .ios-btn-primary:hover {
+      background-color: #0071EB;
+      box-shadow: 0 6px 18px rgba(0, 122, 255, 0.38);
+      transform: translateY(-1px);
+    }
+    .ios-btn-primary:active {
+      background-color: #0062CC;
+      transform: scale(0.98) translateY(0);
+      box-shadow: 0 2px 6px rgba(0, 122, 255, 0.2);
+    }
+
+    /* iOS Modal Transition */
+    .ios-modal-anim {
+      animation: iosSpring 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes iosSpring {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* iOS Loading Spinner */
+    .ios-spinner {
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 2.5px solid #ffffff;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-8 antialiased">
+
+  <div class="w-full max-w-xl space-y-5">
+
+    <!-- Top Bar with Back Button & View History (Apple iOS Style) -->
+    <div class="flex items-center justify-between pt-2 min-h-[42px]">
+      <!-- Today View: Back Button -->
+      <button onclick="handleBackClick()" id="btn-back" class="inline-flex items-center gap-0.5 text-[#007AFF] text-[17px] font-normal hover:opacity-80 active:opacity-40 transition-opacity cursor-pointer">
+        <i data-lucide="chevron-left" class="w-5 h-5 -ml-1"></i>
+        <span>Back</span>
+      </button>
+
+      <!-- History View: History Logs Title (Matches Back button color & font, non-clickable) -->
+      <span id="nav-history-title" class="text-[#007AFF] text-[17px] font-normal select-none cursor-default hidden">
+        History Logs
+      </span>
+
+      <!-- Right Group: Edit Button & Toggle Button -->
+      <div class="flex items-center gap-3">
+        <!-- Edit Button (History View) -->
+        <button 
+          type="button" 
+          onclick="toggleHistoryEdit()" 
+          id="btn-history-edit" 
+          class="text-[#007AFF] text-[17px] font-normal hover:opacity-80 active:opacity-40 transition-opacity cursor-pointer hidden"
+        >
+          Edit
+        </button>
+
+        <!-- Toggle Button (View History / View Today) with anchored 'View' word & matching Apple iOS style -->
+        <button 
+          onclick="toggleView()" 
+          id="btn-toggle-history" 
+          class="w-[126px] inline-flex items-center justify-start text-[#007AFF] text-[17px] font-normal hover:opacity-80 active:opacity-40 transition-opacity cursor-pointer select-none"
+        >
+          <span>View&nbsp;</span>
+          <span id="history-toggle-word" class="inline-block min-w-[58px] text-left">History</span>
+          <i data-lucide="chevron-right" id="history-toggle-icon" class="w-5 h-5 text-[#007AFF] shrink-0"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Total Expense Card -->
+    <div id="card-total-expense" class="ios-card ios-card-hoverable p-6 text-center space-y-1 transition-all">
+      <div class="text-sm font-medium text-gray-500" id="total-date-label">
+        Total Expense for Today
+      </div>
+      <div class="text-4xl font-semibold tracking-tight text-gray-900" id="today-total-display">
+        ₱0.00
+      </div>
+    </div>
+
+    <!-- Add Expense Button -->
+    <div id="container-add-expense" class="transition-all">
+      <button onclick="openModal()" class="w-full py-3.5 px-4 rounded-xl ios-btn-primary font-semibold text-base flex items-center justify-center gap-2 cursor-pointer">
+        <i data-lucide="plus" class="w-5 h-5"></i>
+        <span>Add Expense</span>
+      </button>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 1: TODAY'S EXPENSE TABLE VIEW                                 -->
+    <!-- ===================================================================== -->
+    <div id="section-today" class="ios-card ios-card-hoverable overflow-hidden transition-opacity duration-200">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-[#E5E5EA] bg-gray-50/80 text-gray-500 font-medium text-xs uppercase tracking-wider">
+              <th class="py-3.5 px-4">Timestamp</th>
+              <th class="py-3.5 px-4">Amount</th>
+              <th class="py-3.5 px-4">Description</th>
+            </tr>
+          </thead>
+          <tbody id="expense-table-body" class="divide-y divide-[#E5E5EA]">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SECTION 2: HISTORY LOGS VIEW (Appears smoothly when View History is clicked) -->
+    <!-- ===================================================================== -->
+    <div id="section-history" class="hidden space-y-3 transition-opacity duration-200">
+      <!-- Edit Mode Action Toolbar (Select All / Delete) -->
+      <div id="history-edit-bar" class="hidden flex items-center justify-between px-4 py-2.5 bg-gray-100/90 rounded-2xl text-xs font-medium border border-[#E5E5EA]">
+        <button type="button" onclick="toggleSelectAllHistory()" id="btn-select-all" class="text-[#007AFF] font-medium hover:opacity-80 transition-opacity cursor-pointer flex items-center gap-1.5 select-none">
+          <span id="select-all-label">Select All</span>
+        </button>
+        <button type="button" onclick="deleteSelectedHistory()" id="btn-delete-selected" class="text-[#FF3B30] font-semibold hover:opacity-80 active:opacity-60 transition-opacity cursor-pointer flex items-center gap-1.5 disabled:opacity-30 disabled:cursor-not-allowed select-none">
+          <i data-lucide="trash-2" class="w-4 h-4"></i>
+          <span id="delete-label">Delete</span>
+        </button>
+      </div>
+
+      <!-- Injected List Container -->
+      <div id="history-list-content">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- iOS Add Expense Modal -->
+  <div id="expenseModal" class="fixed inset-0 z-50 bg-black/35 backdrop-blur-sm hidden flex items-start justify-center pt-8 sm:pt-14 p-4 overflow-y-auto">
+    <div class="ios-modal-anim w-full max-w-sm ios-card p-6 space-y-4">
+      
+      <div class="flex items-center justify-between border-b border-[#E5E5EA] pb-3">
+        <h3 class="font-semibold text-lg text-gray-900">Add Expense</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-1.5 rounded-full transition-colors cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="expenseForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1">Add Amount (₱)</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-base">₱</span>
+            <input 
+              type="number" 
+              id="modal-amount" 
+              required 
+              step="0.01" 
+              min="0.01" 
+              placeholder="0.00" 
+              class="w-full pl-8 pr-3.5 py-2.5 rounded-xl border border-[#C6C6C8] bg-white text-gray-900 text-base focus:outline-none focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 transition-all hover:border-gray-400"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1">Add Description</label>
+          <input 
+            type="text" 
+            id="modal-desc" 
+            required 
+            placeholder="What is this expense?" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-[#C6C6C8] bg-white text-gray-900 text-base focus:outline-none focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 transition-all hover:border-gray-400"
+          />
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button 
+            type="button" 
+            onclick="closeModal()" 
+            class="flex-1 py-2.5 rounded-xl bg-gray-100 text-gray-700 font-medium text-sm hover:bg-gray-200 active:bg-gray-300 transition-colors cursor-pointer"
+          >
+            Cancel
+          </button>
+
+          <button 
+            type="submit" 
+            id="btn-enter" 
+            class="flex-1 py-2.5 rounded-xl ios-btn-primary font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span id="btn-text">Enter</span>
+            <span id="btn-spinner" class="ios-spinner hidden"></span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Day Detail History Modal (A little bit down from top & 1-Liner Header) -->
+  <div id="dayDetailModal" class="fixed inset-0 z-50 bg-black/35 backdrop-blur-sm hidden flex items-start justify-center pt-12 sm:pt-16 p-4 overflow-y-auto">
+    <div class="ios-modal-anim w-full max-w-lg ios-card p-5 sm:p-6 space-y-4 max-h-[84vh] flex flex-col shadow-2xl">
+      
+      <!-- 1-Liner Header: Date | Total Exp -->
+      <div class="flex items-center justify-between border-b border-[#E5E5EA] pb-3 shrink-0">
+        <div class="flex items-center gap-2 whitespace-nowrap overflow-hidden text-ellipsis flex-1 min-w-0 pr-2">
+          <span class="font-semibold text-gray-900 text-sm sm:text-base tracking-tight shrink-0" id="day-modal-date">
+            September 10, 2026
+          </span>
+          <span class="text-gray-300 font-light text-base shrink-0">|</span>
+          <span class="text-gray-500 font-normal text-xs sm:text-sm shrink-0">Total Exp:</span>
+          <span class="font-semibold text-gray-900 text-sm sm:text-base whitespace-nowrap shrink-0" id="day-modal-amount">
+            ₱0.00
+          </span>
+        </div>
+        <button onclick="closeDayModal()" class="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-1.5 rounded-full transition-colors cursor-pointer shrink-0 -mr-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Table Container for Long Expense Lists -->
+      <div class="overflow-y-auto max-h-[52vh] sm:max-h-[60vh] flex-1 rounded-xl border border-[#E5E5EA] ios-scrollbar">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead class="sticky top-0 z-10 bg-gray-50/95 backdrop-blur-sm">
+            <tr class="border-b border-[#E5E5EA] text-gray-500 font-medium text-xs uppercase tracking-wider">
+              <th class="py-3 px-4">Timestamp</th>
+              <th class="py-3 px-4">Amount</th>
+              <th class="py-3 px-4">Description</th>
+            </tr>
+          </thead>
+          <tbody id="day-modal-table-body" class="divide-y divide-[#E5E5EA]">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- iOS Delete Confirmation Modal (Native Alert Style) -->
+  <div id="deleteConfirmModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="ios-modal-anim w-full max-w-[320px] bg-white rounded-2xl p-6 text-center space-y-4 shadow-2xl border border-[#E5E5EA]">
+      <div class="w-12 h-12 rounded-full bg-red-100 text-[#FF3B30] flex items-center justify-center mx-auto">
+        <i data-lucide="trash-2" class="w-6 h-6"></i>
+      </div>
+      <div class="space-y-1.5">
+        <h4 class="font-bold text-gray-900 text-base" id="delete-modal-title">Delete History Logs?</h4>
+        <p class="text-xs text-gray-500 leading-relaxed" id="delete-modal-desc">
+          Are you sure you want to permanently delete the selected transactions from your local storage?
+        </p>
+      </div>
+      <div class="pt-2 flex gap-2.5">
+        <button 
+          type="button" 
+          onclick="closeDeleteModal()" 
+          class="flex-1 py-2.5 rounded-xl bg-gray-100 text-gray-700 font-medium text-sm hover:bg-gray-200 active:bg-gray-300 transition-colors cursor-pointer"
+        >
+          Cancel
+        </button>
+        <button 
+          type="button" 
+          onclick="confirmDeleteSelectedHistory()" 
+          class="flex-1 py-2.5 rounded-xl bg-[#FF3B30] text-white font-semibold text-sm hover:bg-red-600 active:bg-red-700 shadow-sm transition-all cursor-pointer"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'ios_expense_tracker_records';
+    let records = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    let isHistoryView = false;
+    let groupedHistory = {};
+
+    function getTodayDateString() {
+      const today = new Date();
+      return today.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    }
+
+    function getTodayDateKey() {
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDateKey(key) {
+      if (!key) return 'Unknown Date';
+      const parts = key.split('-');
+      if (parts.length === 3) {
+        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        return d.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        });
+      }
+      return key;
+    }
+
+    let lastActiveDateKey = getTodayDateKey();
+
+    function checkDateRollover() {
+      const currentDateKey = getTodayDateKey();
+      if (currentDateKey !== lastActiveDateKey) {
+        lastActiveDateKey = currentDateKey;
+        const dateLabel = document.getElementById('total-date-label');
+        if (dateLabel) {
+          dateLabel.textContent = `Total Expense for ${getTodayDateString()}`;
+        }
+        renderAll();
+      }
+    }
+
+    // Auto-check for midnight date change every 15 seconds and when user switches back to tab
+    setInterval(checkDateRollover, 15000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        checkDateRollover();
+      }
+    });
+    window.addEventListener('focus', checkDateRollover);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      document.getElementById('total-date-label').textContent = `Total Expense for ${getTodayDateString()}`;
+      renderAll();
+    });
+
+    // Seamless Toggle between Today's Table & History Logs
+    function toggleView() {
+      isHistoryView = !isHistoryView;
+      applyView();
+    }
+
+    function applyView() {
+      const secToday = document.getElementById('section-today');
+      const secHistory = document.getElementById('section-history');
+      const cardTotal = document.getElementById('card-total-expense');
+      const cardAdd = document.getElementById('container-add-expense');
+      const toggleWord = document.getElementById('history-toggle-word');
+      const btnBack = document.getElementById('btn-back');
+      const navHistoryTitle = document.getElementById('nav-history-title');
+      const btnHistoryEdit = document.getElementById('btn-history-edit');
+
+      if (isHistoryView) {
+        // Replace Back button with History Logs title
+        if (btnBack) btnBack.classList.add('hidden');
+        if (navHistoryTitle) navHistoryTitle.classList.remove('hidden');
+
+        // Show Edit button in History view
+        if (btnHistoryEdit) btnHistoryEdit.classList.remove('hidden');
+
+        // Hide total expenses card and add expense button in History view
+        cardTotal.classList.add('hidden');
+        cardAdd.classList.add('hidden');
+        secToday.classList.add('hidden');
+        secHistory.classList.remove('hidden');
+        if (toggleWord) toggleWord.textContent = 'Today';
+        renderHistoryList();
+      } else {
+        // Restore Back button and hide History Logs title in Today view
+        if (btnBack) btnBack.classList.remove('hidden');
+        if (navHistoryTitle) navHistoryTitle.classList.add('hidden');
+
+        // Hide Edit button and reset edit mode in Today view
+        if (btnHistoryEdit) btnHistoryEdit.classList.add('hidden');
+        isHistoryEditMode = false;
+        selectedHistoryKeys.clear();
+
+        // Show total expenses card and add expense button in Today view
+        cardTotal.classList.remove('hidden');
+        cardAdd.classList.remove('hidden');
+        secHistory.classList.add('hidden');
+        secToday.classList.remove('hidden');
+        if (toggleWord) toggleWord.textContent = 'History';
+        renderTodayTable();
+      }
+      lucide.createIcons();
+    }
+
+    function handleBackClick() {
+      if (isHistoryView) {
+        toggleView();
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    function openModal() {
+      const modal = document.getElementById('expenseModal');
+      modal.classList.remove('hidden');
+      document.getElementById('modal-amount').value = '';
+      document.getElementById('modal-desc').value = '';
+      document.getElementById('modal-amount').focus();
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      document.getElementById('expenseModal').classList.add('hidden');
+    }
+
+    function closeDayModal() {
+      document.getElementById('dayDetailModal').classList.add('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteConfirmModal').classList.add('hidden');
+    }
+
+    window.addEventListener('click', (e) => {
+      const expModal = document.getElementById('expenseModal');
+      const dayModal = document.getElementById('dayDetailModal');
+      const delModal = document.getElementById('deleteConfirmModal');
+      if (e.target === expModal) closeModal();
+      if (e.target === dayModal) closeDayModal();
+      if (e.target === delModal) closeDeleteModal();
+    });
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const amountInput = document.getElementById('modal-amount');
+      const descInput = document.getElementById('modal-desc');
+      const btnEnter = document.getElementById('btn-enter');
+      const btnText = document.getElementById('btn-text');
+      const btnSpinner = document.getElementById('btn-spinner');
+
+      const amount = parseFloat(amountInput.value);
+      const description = descInput.value.trim();
+      if (!amount || !description) return;
+
+      btnEnter.disabled = true;
+      btnText.textContent = 'Saving...';
+      btnSpinner.classList.remove('hidden');
+
+      setTimeout(() => {
+        const now = new Date();
+        const timestamp = now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+
+        const newRecord = {
+          id: Date.now().toString(),
+          timestamp: timestamp,
+          dateKey: getTodayDateKey(),
+          dateLabel: getTodayDateString(),
+          amount: amount,
+          description: description
+        };
+
+        records.unshift(newRecord);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+
+        btnEnter.disabled = false;
+        btnText.textContent = 'Enter';
+        btnSpinner.classList.add('hidden');
+
+        closeModal();
+        renderAll();
+      }, 450);
+    }
+
+    function renderTodayTable() {
+      const dateLabel = document.getElementById('total-date-label');
+      if (dateLabel) {
+        dateLabel.textContent = `Total Expense for ${getTodayDateString()}`;
+      }
+
+      const tbody = document.getElementById('expense-table-body');
+      const todayKey = getTodayDateKey();
+      
+      let todayTotal = 0;
+      const todayItems = [];
+
+      records.forEach(item => {
+        if (item.dateKey === todayKey) {
+          todayTotal += Number(item.amount);
+          todayItems.push(item);
+        }
+      });
+
+      document.getElementById('today-total-display').textContent = `₱${todayTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      if (todayItems.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="3" class="py-8 text-center text-gray-400 text-xs font-normal">
+              No expenses added today.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = todayItems.map(r => `
+        <tr class="hover:bg-[#007AFF]/[0.035] transition-colors">
+          <td class="py-3.5 px-4 text-xs font-normal text-gray-500">${r.timestamp}</td>
+          <td class="py-3.5 px-4 text-sm font-semibold text-gray-900">₱${Number(r.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td class="py-3.5 px-4 text-sm text-gray-700">${r.description}</td>
+        </tr>
+      `).join('');
+    }
+
+    let isHistoryEditMode = false;
+    let selectedHistoryKeys = new Set();
+
+    function toggleHistoryEdit() {
+      isHistoryEditMode = !isHistoryEditMode;
+      if (!isHistoryEditMode) {
+        selectedHistoryKeys.clear();
+      }
+      renderHistoryList();
+    }
+
+    function toggleHistoryKeySelection(key, event) {
+      if (event) event.stopPropagation();
+      if (selectedHistoryKeys.has(key)) {
+        selectedHistoryKeys.delete(key);
+      } else {
+        selectedHistoryKeys.add(key);
+      }
+      renderHistoryList();
+    }
+
+    function toggleSelectAllHistory() {
+      const sortedKeys = Object.keys(groupedHistory);
+      if (selectedHistoryKeys.size === sortedKeys.length && sortedKeys.length > 0) {
+        selectedHistoryKeys.clear();
+      } else {
+        selectedHistoryKeys = new Set(sortedKeys);
+      }
+      renderHistoryList();
+    }
+
+    function deleteSelectedHistory() {
+      if (selectedHistoryKeys.size === 0) return;
+      const count = selectedHistoryKeys.size;
+      const titleEl = document.getElementById('delete-modal-title');
+      const descEl = document.getElementById('delete-modal-desc');
+
+      const totalGroups = Object.keys(groupedHistory).length;
+      if (count === totalGroups && totalGroups > 0) {
+        titleEl.textContent = `Delete All History (${count})?`;
+        descEl.textContent = `Are you sure you want to delete all ${count} day(s) of history logs? They will be permanently removed from your local device storage.`;
+      } else {
+        titleEl.textContent = `Delete ${count} History Log(s)?`;
+        descEl.textContent = `Are you sure you want to delete the selected ${count} day(s)? They will be permanently removed from your local device storage.`;
+      }
+
+      document.getElementById('deleteConfirmModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function confirmDeleteSelectedHistory() {
+      if (selectedHistoryKeys.size === 0) {
+        closeDeleteModal();
+        return;
+      }
+
+      // Permanently remove all selected records from local array and local storage
+      records = records.filter(r => !selectedHistoryKeys.has(r.dateKey));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      selectedHistoryKeys.clear();
+      closeDeleteModal();
+
+      // Recalculate grouped history
+      groupedHistory = {};
+      records.forEach(r => {
+        const key = r.dateKey || 'Undated';
+        groupedHistory[key] = true;
+      });
+
+      // If no history logs left, exit edit mode
+      if (Object.keys(groupedHistory).length === 0) {
+        isHistoryEditMode = false;
+      }
+
+      renderAll();
+    }
+
+    function renderHistoryList() {
+      const container = document.getElementById('history-list-content') || document.getElementById('section-history');
+      const editBar = document.getElementById('history-edit-bar');
+      const btnHistoryEdit = document.getElementById('btn-history-edit');
+
+      groupedHistory = {};
+      records.forEach(r => {
+        const key = r.dateKey || 'Undated';
+        if (!groupedHistory[key]) {
+          groupedHistory[key] = {
+            dateKey: key,
+            dateLabel: r.dateLabel || formatDateKey(key),
+            total: 0,
+            items: []
+          };
+        }
+        groupedHistory[key].total += Number(r.amount);
+        groupedHistory[key].items.push(r);
+      });
+
+      const sortedKeys = Object.keys(groupedHistory).sort((a, b) => b.localeCompare(a));
+
+      if (sortedKeys.length === 0) {
+        if (btnHistoryEdit) btnHistoryEdit.classList.add('hidden');
+        if (editBar) editBar.classList.add('hidden');
+        isHistoryEditMode = false;
+        container.innerHTML = `
+          <div class="ios-card p-8 text-center text-gray-400 text-sm font-normal">
+            No expense history logs found.
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      if (isHistoryView && btnHistoryEdit) {
+        btnHistoryEdit.classList.remove('hidden');
+      }
+
+      if (isHistoryEditMode) {
+        if (editBar) editBar.classList.remove('hidden');
+        if (btnHistoryEdit) {
+          btnHistoryEdit.textContent = 'Done';
+          btnHistoryEdit.classList.add('font-semibold');
+        }
+
+        const selectAllLabel = document.getElementById('select-all-label');
+        if (selectAllLabel) {
+          selectAllLabel.textContent = (selectedHistoryKeys.size === sortedKeys.length && sortedKeys.length > 0)
+            ? 'Deselect All'
+            : 'Select All';
+        }
+
+        const deleteBtn = document.getElementById('btn-delete-selected');
+        const deleteLabel = document.getElementById('delete-label');
+        if (deleteLabel) {
+          if (selectedHistoryKeys.size === sortedKeys.length && sortedKeys.length > 0) {
+            deleteLabel.textContent = `Delete All (${selectedHistoryKeys.size})`;
+          } else if (selectedHistoryKeys.size > 0) {
+            deleteLabel.textContent = `Delete (${selectedHistoryKeys.size})`;
+          } else {
+            deleteLabel.textContent = 'Delete';
+          }
+        }
+        if (deleteBtn) {
+          deleteBtn.disabled = selectedHistoryKeys.size === 0;
+        }
+      } else {
+        if (editBar) editBar.classList.add('hidden');
+        if (btnHistoryEdit) {
+          btnHistoryEdit.textContent = 'Edit';
+          btnHistoryEdit.classList.remove('font-semibold');
+        }
+      }
+
+      const rowsHtml = sortedKeys.map(key => {
+        const group = groupedHistory[key];
+        const formattedTotal = group.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const isSelected = selectedHistoryKeys.has(key);
+
+        if (isHistoryEditMode) {
+          return `
+            <div 
+              onclick="toggleHistoryKeySelection('${key}')" 
+              class="w-full py-4 px-4 sm:px-6 flex items-center justify-between text-left cursor-pointer transition-colors ${isSelected ? 'bg-blue-50/60' : 'hover:bg-gray-50/90'} active:bg-gray-100/80 group select-none"
+            >
+              <div class="flex items-center gap-2 sm:gap-2.5 flex-nowrap whitespace-nowrap min-w-0 pr-2">
+                <span class="font-semibold text-gray-900 text-sm sm:text-[15px] tracking-tight shrink-0">${group.dateLabel}</span>
+                <span class="text-gray-300 font-light text-sm sm:text-base shrink-0">|</span>
+                <span class="text-gray-500 font-normal text-xs sm:text-sm shrink-0">Total Exp:</span>
+                <span class="font-bold text-gray-900 text-sm sm:text-[15px] whitespace-nowrap shrink-0">₱${formattedTotal}</span>
+              </div>
+              <div class="w-5 h-5 rounded-full border-2 ${isSelected ? 'border-[#007AFF] bg-[#007AFF]' : 'border-gray-300 bg-white'} flex items-center justify-center transition-all shrink-0">
+                ${isSelected ? '<i data-lucide="check" class="w-3.5 h-3.5 text-white stroke-[3]"></i>' : ''}
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <button 
+              type="button" 
+              onclick="openDayDetailModal('${key}')" 
+              class="w-full py-4 px-4 sm:px-6 flex items-center justify-between text-left cursor-pointer transition-colors hover:bg-gray-50/90 active:bg-gray-100/80 group"
+            >
+              <div class="flex items-center gap-2 sm:gap-2.5 flex-nowrap whitespace-nowrap min-w-0 pr-2">
+                <span class="font-semibold text-gray-900 text-sm sm:text-[15px] tracking-tight shrink-0">${group.dateLabel}</span>
+                <span class="text-gray-300 font-light text-sm sm:text-base shrink-0">|</span>
+                <span class="text-gray-500 font-normal text-xs sm:text-sm shrink-0">Total Exp:</span>
+                <span class="font-bold text-gray-900 text-sm sm:text-[15px] whitespace-nowrap shrink-0">₱${formattedTotal}</span>
+              </div>
+              <i data-lucide="chevron-right" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-[#007AFF] group-hover:translate-x-0.5 transition-all shrink-0"></i>
+            </button>
+          `;
+        }
+      }).join('');
+
+      container.innerHTML = `
+        <div class="bg-white rounded-2xl border border-[#E5E5EA] divide-y divide-[#E5E5EA] overflow-hidden shadow-xs">
+          ${rowsHtml}
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function openDayDetailModal(key) {
+      const group = groupedHistory[key];
+      if (!group) return;
+
+      const formattedTotal = group.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('day-modal-date').textContent = group.dateLabel;
+      document.getElementById('day-modal-amount').textContent = `₱${formattedTotal}`;
+
+      const tbody = document.getElementById('day-modal-table-body');
+      tbody.innerHTML = group.items.map(item => `
+        <tr class="hover:bg-[#007AFF]/[0.035] transition-colors">
+          <td class="py-3 px-4 text-xs font-normal text-gray-500">${item.timestamp}</td>
+          <td class="py-3 px-4 text-sm font-semibold text-gray-900">₱${Number(item.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td class="py-3 px-4 text-sm text-gray-700">${item.description}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('dayDetailModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function renderAll() {
+      renderTodayTable();
+      renderHistoryList();
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
