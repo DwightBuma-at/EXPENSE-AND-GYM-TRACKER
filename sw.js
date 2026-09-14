@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fit-expense-tracker-v1';
+const CACHE_NAME = 'fit-expense-tracker-v8';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -36,23 +36,27 @@ self.addEventListener('fetch', (event) => {
   if (!event.request.url.startsWith('http')) return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
+    caches.match(event.request, { ignoreSearch: true }).then((cached) => {
       if (cached) return cached;
 
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+      return fetch(event.request)
+        .then((networkResponse) => {
+          if (!networkResponse || networkResponse.status !== 200) {
+            return networkResponse;
+          }
+          const cloned = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, cloned);
+          });
           return networkResponse;
-        }
-        const cloned = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, cloned);
+        })
+        .catch(() => {
+          if (event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html')) {
+            return caches.match(event.request, { ignoreSearch: true }).then((page) => {
+              return page || caches.match('./index.html');
+            });
+          }
         });
-        return networkResponse;
-      }).catch(() => {
-        if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./index.html');
-        }
-      });
     })
   );
 });
