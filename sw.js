@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fit-expense-tracker-v12';
+const CACHE_NAME = 'fit-expense-tracker-v13';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const PRECACHE_URLS = [
   './leg.html',
   './expense.html',
   './history.html',
+  './logs.html',
   './manifest.json',
   './assets/icon.svg',
   './assets/js/tailwind.min.js',

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout Logs - Gym Tracker</title>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const routine = params.get('routine') || 'chestandback';
+    if (routine === 'arm') {
+      window.location.replace('arm.html?view=logs');
+    } else if (routine === 'leg') {
+      window.location.replace('leg.html?view=logs');
+    } else {
+      window.location.replace('chestandback.html?view=logs');
+    }
+  </script>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F2F2F7; text-align: center; padding: 60px 20px; color: #8E8E93;">
+  <p style="font-size: 17px; font-weight: 500;">Loading Workout Logs...</p>
+</body>
+</html>
