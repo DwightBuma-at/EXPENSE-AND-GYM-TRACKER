@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fit-expense-tracker-v8';
+const CACHE_NAME = 'fit-expense-tracker-v12';
 const PRECACHE_URLS = [
   './',
   './index.html',

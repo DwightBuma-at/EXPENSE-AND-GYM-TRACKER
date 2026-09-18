@@ -75,6 +75,21 @@
         transform: scale(1) translateY(0);
       }
     }
+
+    /* Wheel Picker Styles */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .wheel-item {
+      will-change: transform, opacity;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
   </style>
 </head>
 
@@ -101,99 +116,117 @@
     <div class="ios-outlined-card divide-y divide-[#E5E5EA] overflow-hidden mt-2">
 
       <!-- Exercise 1 -->
-      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
-        <div onclick="openLogModal('Dumbbell Lateral Raises')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between gap-2.5 group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Dumbbell Lateral Raises')" class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0 py-1 pr-1">
           <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
             1
           </div>
-          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors truncate">
             Dumbbell Lateral Raises
           </span>
         </div>
-        <button onclick="openHistoryModal('Dumbbell Lateral Raises', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>View Logs</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-        </button>
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div onclick="openLogModal('Dumbbell Lateral Raises')" data-last-badge="Dumbbell Lateral Raises" class="text-right cursor-pointer hover:opacity-80 transition-opacity hidden"></div>
+          <button onclick="openHistoryModal('Dumbbell Lateral Raises', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+            <span>View Logs</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Exercise 2 -->
-      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
-        <div onclick="openLogModal('Seated Cable Face Pull')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between gap-2.5 group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Seated Cable Face Pull')" class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0 py-1 pr-1">
           <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
             2
           </div>
-          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors truncate">
             Seated Cable Face Pull
           </span>
         </div>
-        <button onclick="openHistoryModal('Seated Cable Face Pull', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>View Logs</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-        </button>
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div onclick="openLogModal('Seated Cable Face Pull')" data-last-badge="Seated Cable Face Pull" class="text-right cursor-pointer hover:opacity-80 transition-opacity hidden"></div>
+          <button onclick="openHistoryModal('Seated Cable Face Pull', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+            <span>View Logs</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Exercise 3 -->
-      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
-        <div onclick="openLogModal('Tricep Pushdown (Vbar)')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between gap-2.5 group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Tricep Pushdown (Vbar)')" class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0 py-1 pr-1">
           <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
             3
           </div>
-          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors truncate">
             Tricep Pushdown (Vbar)
           </span>
         </div>
-        <button onclick="openHistoryModal('Tricep Pushdown (Vbar)', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>View Logs</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-        </button>
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div onclick="openLogModal('Tricep Pushdown (Vbar)')" data-last-badge="Tricep Pushdown (Vbar)" class="text-right cursor-pointer hover:opacity-80 transition-opacity hidden"></div>
+          <button onclick="openHistoryModal('Tricep Pushdown (Vbar)', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+            <span>View Logs</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Exercise 4 -->
-      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
-        <div onclick="openLogModal('Tricep Pullover (Vbar)')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between gap-2.5 group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Tricep Pullover (Vbar)')" class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0 py-1 pr-1">
           <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
             4
           </div>
-          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors truncate">
             Tricep Pullover (Vbar)
           </span>
         </div>
-        <button onclick="openHistoryModal('Tricep Pullover (Vbar)', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>View Logs</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-        </button>
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div onclick="openLogModal('Tricep Pullover (Vbar)')" data-last-badge="Tricep Pullover (Vbar)" class="text-right cursor-pointer hover:opacity-80 transition-opacity hidden"></div>
+          <button onclick="openHistoryModal('Tricep Pullover (Vbar)', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+            <span>View Logs</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Exercise 5 -->
-      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
-        <div onclick="openLogModal('Incline Seated Bicep Curl')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between gap-2.5 group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Incline Seated Bicep Curl')" class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0 py-1 pr-1">
           <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
             5
           </div>
-          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors truncate">
             Incline Seated Bicep Curl
           </span>
         </div>
-        <button onclick="openHistoryModal('Incline Seated Bicep Curl', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>View Logs</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-        </button>
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div onclick="openLogModal('Incline Seated Bicep Curl')" data-last-badge="Incline Seated Bicep Curl" class="text-right cursor-pointer hover:opacity-80 transition-opacity hidden"></div>
+          <button onclick="openHistoryModal('Incline Seated Bicep Curl', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+            <span>View Logs</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Exercise 6 -->
-      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
-        <div onclick="openLogModal('Hammer Curls')" class="flex items-center gap-3.5 cursor-pointer flex-1 py-1">
+      <div class="py-3.5 px-4 sm:px-5 flex items-center justify-between gap-2.5 group hover:bg-zinc-50/90 active:bg-zinc-100/90 transition-all duration-150 select-none">
+        <div onclick="openLogModal('Hammer Curls')" class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0 py-1 pr-1">
           <div class="w-8 h-8 rounded-xl bg-indigo-50 text-[#5856D6] text-xs font-bold flex items-center justify-center shrink-0 border border-indigo-200/70 shadow-2xs group-hover:scale-105 group-hover:border-[#5856D6] group-hover:bg-[#5856D6] group-hover:text-white transition-all duration-200">
             6
           </div>
-          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors">
+          <span class="font-bold text-[15.5px] sm:text-[16.5px] text-zinc-900 tracking-tight group-hover:text-[#5856D6] transition-colors truncate">
             Hammer Curls
           </span>
         </div>
-        <button onclick="openHistoryModal('Hammer Curls', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>View Logs</span>
-          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-        </button>
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div onclick="openLogModal('Hammer Curls')" data-last-badge="Hammer Curls" class="text-right cursor-pointer hover:opacity-80 transition-opacity hidden"></div>
+          <button onclick="openHistoryModal('Hammer Curls', event)" class="text-xs font-bold text-[#5856D6] hover:text-indigo-800 bg-indigo-50/90 hover:bg-indigo-100 active:bg-indigo-200/70 px-3 py-1.5 rounded-xl border border-indigo-200/70 transition-all cursor-pointer flex items-center gap-1 shrink-0">
+            <span>View Logs</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
       </div>
 
     </div>
@@ -216,23 +249,36 @@
       </div>
 
       <form id="logForm" onsubmit="handleSaveLog(event)" class="space-y-4">
-        <!-- Reps Input -->
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">Reps per set</label>
-          <input 
-            type="number" 
-            id="log-reps" 
-            required 
-            min="1" 
-            value="12" 
-            class="w-full px-3.5 py-2.5 rounded-xl border border-[#C6C6C8] bg-white text-gray-900 font-semibold text-base focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all"
-          />
-        </div>
-
-        <!-- Weight with KG / LBS Toggle -->
+        <!-- Reps Slider Wheel (1 - 12) -->
         <div>
           <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500">Weight</label>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500">Reps per set</label>
+            <span id="selected-reps-display" class="text-sm font-extrabold text-[#5856D6]">12 reps</span>
+          </div>
+          <div class="relative bg-[#F2F2F7] rounded-2xl border border-[#C6C6C8]/70 py-1.5 overflow-hidden shadow-inner">
+            <!-- Center highlight pill -->
+            <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[52px] h-10 rounded-xl bg-white shadow-xs border border-gray-200/90 z-0"></div>
+
+            <!-- Left & Right Fade Masks -->
+            <div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F2F2F7] via-[#F2F2F7]/80 to-transparent z-10"></div>
+            <div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#F2F2F7] via-[#F2F2F7]/80 to-transparent z-10"></div>
+
+            <!-- Scroll track -->
+            <div 
+              id="reps-wheel" 
+              class="flex items-center overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory relative z-5 cursor-grab active:cursor-grabbing select-none py-1 px-[calc(50%-26px)]"
+            ></div>
+          </div>
+          <input type="hidden" id="log-reps" value="12" />
+        </div>
+
+        <!-- Weight Slider Wheel (10 - 200) with KG / LBS Toggle -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <div class="flex items-center gap-1.5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-500">Weight</label>
+              <span id="selected-weight-display" class="text-sm font-extrabold text-[#5856D6]">20 KG</span>
+            </div>
             <!-- iOS Segmented Toggle -->
             <div class="flex p-0.5 rounded-lg bg-gray-200 text-xs font-semibold select-none">
               <button 
@@ -254,19 +300,21 @@
             </div>
           </div>
 
-          <div class="relative">
-            <input 
-              type="number" 
-              step="any"
-              id="log-weight" 
-              required 
-              placeholder="e.g. 18" 
-              class="w-full px-3.5 py-2.5 rounded-xl border border-[#C6C6C8] bg-white text-gray-900 font-semibold text-base focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all pr-12"
-            />
-            <span id="weight-unit-label" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 pointer-events-none uppercase">
-              KG
-            </span>
+          <div class="relative bg-[#F2F2F7] rounded-2xl border border-[#C6C6C8]/70 py-1.5 overflow-hidden shadow-inner">
+            <!-- Center highlight pill -->
+            <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[58px] h-10 rounded-xl bg-white shadow-xs border border-gray-200/90 z-0"></div>
+
+            <!-- Left & Right Fade Masks -->
+            <div class="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#F2F2F7] via-[#F2F2F7]/80 to-transparent z-10"></div>
+            <div class="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#F2F2F7] via-[#F2F2F7]/80 to-transparent z-10"></div>
+
+            <!-- Scroll track -->
+            <div 
+              id="weight-wheel" 
+              class="flex items-center overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory relative z-5 cursor-grab active:cursor-grabbing select-none py-1 px-[calc(50%-29px)]"
+            ></div>
           </div>
+          <input type="hidden" id="log-weight" value="20" />
         </div>
 
         <!-- Action Buttons -->
@@ -378,41 +426,256 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
     }
 
+    const REPS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const WEIGHT_OPTIONS = [];
+    for (let w = 10; w <= 110; w += 10) WEIGHT_OPTIONS.push(w);
+    for (let w = 115; w <= 200; w += 5) WEIGHT_OPTIONS.push(w);
+
+    let repsWheelPicker = null;
+    let weightWheelPicker = null;
+
+    function initWheelPicker(containerId, items, defaultVal, onChange, itemWidth = 56) {
+      const container = document.getElementById(containerId);
+      if (!container) return null;
+
+      container.innerHTML = items.map(val => `
+        <div data-val="${val}" class="wheel-item flex-none h-10 flex items-center justify-center snap-center text-sm font-semibold text-gray-400 cursor-pointer select-none" style="width: ${itemWidth}px;">
+          ${val}
+        </div>
+      `).join('');
+
+      let isDown = false;
+      let startX = 0;
+      let scrollStart = 0;
+      let hasMoved = false;
+
+      function updateActive() {
+        const rect = container.getBoundingClientRect();
+        if (rect.width === 0) return;
+        const containerCenter = rect.left + rect.width / 2;
+        const elements = container.querySelectorAll('.wheel-item');
+        let closest = null;
+        let minDiff = Infinity;
+
+        elements.forEach(el => {
+          const elRect = el.getBoundingClientRect();
+          const elCenter = elRect.left + elRect.width / 2;
+          const diff = Math.abs(containerCenter - elCenter);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closest = el;
+          }
+          const maxDist = container.offsetWidth / 2;
+          const ratio = Math.min(diff / maxDist, 1);
+          const opacity = Math.max(0.25, 1 - ratio * 0.75);
+          const scale = Math.max(0.82, 1.15 - ratio * 0.33);
+          el.style.opacity = opacity.toFixed(2);
+          el.style.transform = `scale(${scale.toFixed(2)})`;
+          el.classList.remove('text-gray-900', 'font-black');
+          el.classList.add('text-gray-400', 'font-semibold');
+        });
+
+        if (closest) {
+          closest.style.opacity = '1';
+          closest.style.transform = 'scale(1.18)';
+          closest.classList.remove('text-gray-400', 'font-semibold');
+          closest.classList.add('text-gray-900', 'font-black');
+          const val = closest.getAttribute('data-val');
+          if (onChange) onChange(val);
+        }
+      }
+
+      container.addEventListener('scroll', updateActive, { passive: true });
+
+      // Mouse drag support
+      container.addEventListener('mousedown', (e) => {
+        isDown = true;
+        hasMoved = false;
+        startX = e.pageX - container.offsetLeft;
+        scrollStart = container.scrollLeft;
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+      });
+
+      container.addEventListener('mouseleave', () => {
+        isDown = false;
+      });
+
+      container.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        if (Math.abs(walk) > 3) hasMoved = true;
+        container.scrollLeft = scrollStart - walk;
+      });
+
+      container.querySelectorAll('.wheel-item').forEach(el => {
+        el.addEventListener('click', () => {
+          if (hasMoved) return;
+          scrollToValue(el.getAttribute('data-val'), true);
+        });
+      });
+
+      function scrollToValue(val, smooth = true) {
+        let target = container.querySelector(`.wheel-item[data-val="${val}"]`);
+        if (!target) {
+          const targetNum = parseFloat(val);
+          if (!isNaN(targetNum)) {
+            let closestDiff = Infinity;
+            container.querySelectorAll('.wheel-item').forEach(el => {
+              const itemVal = parseFloat(el.getAttribute('data-val'));
+              if (!isNaN(itemVal)) {
+                const diff = Math.abs(itemVal - targetNum);
+                if (diff < closestDiff) {
+                  closestDiff = diff;
+                  target = el;
+                }
+              }
+            });
+          }
+        }
+        if (!target) return;
+        const targetLeft = target.offsetLeft - (container.offsetWidth / 2) + (target.offsetWidth / 2);
+        container.scrollTo({
+          left: Math.max(0, targetLeft),
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+        setTimeout(updateActive, smooth ? 250 : 40);
+      }
+
+      return { scrollToValue, updateActive };
+    }
+
     function setUnit(unit) {
       currentUnit = unit;
       const kgBtn = document.getElementById('unit-kg-btn');
       const lbsBtn = document.getElementById('unit-lbs-btn');
-      const unitLabel = document.getElementById('weight-unit-label');
+      const currentWeight = document.getElementById('log-weight').value || '20';
 
       if (unit === 'kg') {
         kgBtn.className = 'px-2.5 py-0.5 rounded-md bg-white text-gray-900 shadow-xs transition-all cursor-pointer font-bold';
         lbsBtn.className = 'px-2.5 py-0.5 rounded-md text-gray-500 hover:text-gray-900 transition-all cursor-pointer font-semibold';
-        unitLabel.textContent = 'KG';
       } else {
         lbsBtn.className = 'px-2.5 py-0.5 rounded-md bg-white text-gray-900 shadow-xs transition-all cursor-pointer font-bold';
         kgBtn.className = 'px-2.5 py-0.5 rounded-md text-gray-500 hover:text-gray-900 transition-all cursor-pointer font-semibold';
-        unitLabel.textContent = 'LBS';
       }
+
+      const display = document.getElementById('selected-weight-display');
+      if (display) {
+        display.textContent = `${currentWeight} ${unit.toUpperCase()}`;
+      }
+    }
+
+    function getLastLoggedData(exerciseName) {
+      const logs = getLogs();
+      let latest = null;
+      for (const dateKey in logs) {
+        if (Array.isArray(logs[dateKey])) {
+          logs[dateKey].forEach(item => {
+            if (item && item.exercise === exerciseName) {
+              if (!latest || (item.timestamp && item.timestamp > (latest.timestamp || 0))) {
+                latest = item;
+              }
+            }
+          });
+        }
+      }
+      if (latest) {
+        return { weight: latest.weight, reps: latest.reps, unit: latest.unit };
+      }
+
+      try {
+        const lastMap = JSON.parse(localStorage.getItem(`${STORAGE_KEY}_last_values`) || '{}');
+        if (lastMap && lastMap[exerciseName]) {
+          return lastMap[exerciseName];
+        }
+      } catch (e) {}
+
+      return null;
+    }
+
+    function syncLastMap() {
+      const logs = getLogs();
+      const newMap = {};
+      for (const dateKey in logs) {
+        if (Array.isArray(logs[dateKey])) {
+          logs[dateKey].forEach(item => {
+            if (item && item.exercise) {
+              if (!newMap[item.exercise] || (item.timestamp && item.timestamp > (newMap[item.exercise].timestamp || 0))) {
+                newMap[item.exercise] = {
+                  weight: item.weight,
+                  reps: item.reps,
+                  unit: item.unit,
+                  timestamp: item.timestamp || 0
+                };
+              }
+            }
+          });
+        }
+      }
+      localStorage.setItem(`${STORAGE_KEY}_last_values`, JSON.stringify(newMap));
+    }
+
+    function updateExerciseBadges() {
+      document.querySelectorAll('[data-last-badge]').forEach(badgeEl => {
+        const exName = badgeEl.getAttribute('data-last-badge');
+        const lastData = getLastLoggedData(exName);
+        if (lastData && lastData.weight && lastData.reps) {
+          const u = (lastData.unit || 'kg').toLowerCase();
+          badgeEl.innerHTML = `
+            <div class="text-[11px] font-semibold text-gray-500 leading-tight">${lastData.reps} reps</div>
+            <div class="text-[11.5px] font-bold text-gray-900 leading-tight">${lastData.weight}${u}</div>
+          `;
+          badgeEl.classList.remove('hidden');
+        } else {
+          badgeEl.innerHTML = '';
+          badgeEl.classList.add('hidden');
+        }
+      });
     }
 
     function openLogModal(exerciseName) {
       currentExercise = exerciseName;
       document.getElementById('modal-exercise-title').textContent = exerciseName;
-      document.getElementById('log-reps').value = '12';
-      document.getElementById('log-weight').value = '';
+
+      const lastData = getLastLoggedData(exerciseName);
+      const initialWeight = (lastData && lastData.weight) ? String(lastData.weight) : '20';
+      const initialReps = (lastData && lastData.reps) ? String(lastData.reps) : '12';
+      const initialUnit = (lastData && lastData.unit) ? lastData.unit : 'kg';
+
+      document.getElementById('log-reps').value = initialReps;
+      document.getElementById('log-weight').value = initialWeight;
+      setUnit(initialUnit);
+
+      const repsDisp = document.getElementById('selected-reps-display');
+      if (repsDisp) repsDisp.textContent = `${initialReps} reps`;
+
+      const weightDisp = document.getElementById('selected-weight-display');
+      if (weightDisp) weightDisp.textContent = `${initialWeight} ${initialUnit.toUpperCase()}`;
+
       const saveBtn = document.getElementById('save-log-btn');
       if (saveBtn) {
         saveBtn.disabled = false;
         saveBtn.innerHTML = 'Save Log';
       }
-      setUnit('kg');
       document.getElementById('logModal').classList.remove('hidden');
-      setTimeout(() => document.getElementById('log-weight').focus(), 50);
+
+      setTimeout(() => {
+        if (repsWheelPicker) repsWheelPicker.scrollToValue(initialReps, false);
+        if (weightWheelPicker) weightWheelPicker.scrollToValue(initialWeight, false);
+      }, 60);
+
+      setTimeout(() => {
+        if (repsWheelPicker) repsWheelPicker.scrollToValue(initialReps, false);
+        if (weightWheelPicker) weightWheelPicker.scrollToValue(initialWeight, false);
+      }, 180);
     }
 
     function closeLogModal() {
       document.getElementById('logModal').classList.add('hidden');
-      document.getElementById('logForm').reset();
       const saveBtn = document.getElementById('save-log-btn');
       if (saveBtn) {
         saveBtn.disabled = false;
@@ -423,8 +686,7 @@
     function handleSaveLog(e) {
       e.preventDefault();
       const reps = document.getElementById('log-reps').value.trim() || '12';
-      const weight = document.getElementById('log-weight').value.trim();
-      if (!weight) return;
+      const weight = document.getElementById('log-weight').value.trim() || '20';
 
       const saveBtn = document.getElementById('save-log-btn');
       if (saveBtn) {
@@ -458,6 +720,8 @@
         });
 
         saveLogs(logs);
+        syncLastMap();
+        updateExerciseBadges();
 
         if (saveBtn) {
           saveBtn.innerHTML = `
@@ -512,10 +776,14 @@
         if (logs[dateKey].length === 0) {
           delete logs[dateKey];
           saveLogs(logs);
+          syncLastMap();
+          updateExerciseBadges();
           backToDatesView();
           return;
         }
         saveLogs(logs);
+        syncLastMap();
+        updateExerciseBadges();
         renderDateDetails(dateKey);
       }
     }
@@ -603,16 +871,26 @@
       lucide.createIcons();
     }
 
-    window.addEventListener('click', (e) => {
-      const logModal = document.getElementById('logModal');
-      const historyModal = document.getElementById('historyModal');
-      if (e.target === logModal) closeLogModal();
-      if (e.target === historyModal) closeHistoryModal();
-    });
+
 
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      updateExerciseBadges();
+
+      repsWheelPicker = initWheelPicker('reps-wheel', REPS_OPTIONS, 12, (val) => {
+        document.getElementById('log-reps').value = val;
+        const disp = document.getElementById('selected-reps-display');
+        if (disp) disp.textContent = `${val} reps`;
+      }, 52);
+
+      weightWheelPicker = initWheelPicker('weight-wheel', WEIGHT_OPTIONS, 20, (val) => {
+        document.getElementById('log-weight').value = val;
+        const disp = document.getElementById('selected-weight-display');
+        if (disp) disp.textContent = `${val} ${currentUnit.toUpperCase()}`;
+      }, 58);
     });
+
+    window.addEventListener('pageshow', updateExerciseBadges);
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
